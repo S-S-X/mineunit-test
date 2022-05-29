@@ -1,0 +1,11 @@
+name: luacheck
+on: [push, pull_request]
+
+jobs:
+  mineunit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker://ssxx/mineunit:latest
+      with:
+        entrypoint: mineunit
