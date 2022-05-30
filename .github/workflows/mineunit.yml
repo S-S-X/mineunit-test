@@ -10,3 +10,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: mineunit -c
+    - run: mineunit -r
+    - run: echo "::set-output name=total::$(tail -n 2 luacov.report.out | grep ^Total | grep -o '[0-9.]\+%$')"
