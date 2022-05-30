@@ -4,9 +4,9 @@ on: [push, pull_request]
 jobs:
   mineunit:
     runs-on: ubuntu-latest
+    container:
+      image: docker://ssxx/mineunit:latest
+      options: -u root
     steps:
     - uses: actions/checkout@v2
-    - uses: docker://ssxx/mineunit:latest
-      with:
-        entrypoint: mineunit
-        args: -c
+    - run: mineunit -c
