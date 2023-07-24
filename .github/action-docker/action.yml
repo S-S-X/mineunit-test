@@ -83,6 +83,7 @@ runs:
   steps:
     - run: apk add --no-cache bash
       uses: docker://mineunit/mineunit:latest
+      shell: bash
     - id: mineunit-tests
       name: mineunit runner
       uses: docker://mineunit/mineunit:latest
