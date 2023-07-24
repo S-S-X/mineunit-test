@@ -90,7 +90,7 @@ runs:
       run: |
         set +eo pipefail
         exec 3>&1
-        OUT="$($HOME/.luarocks/bin/mineunit -c ${{ inputs.mineunit-args }} | tee >(cat - >&3); exit ${PIPESTATUS[0]})"
+        OUT="$(mineunit -c ${{ inputs.mineunit-args }} | tee >(cat - >&3); exit ${PIPESTATUS[0]})"
         ERR=$?
         exec 3>&-
         grep_eronly=(grep '0 successes / 0 failures / [1-9] error.\? / 0 pending')
@@ -104,7 +104,7 @@ runs:
       working-directory: "${{ inputs.working-directory }}"
       shell: bash
       run: |
-        $HOME/.luarocks/bin/mineunit -r
+        mineunit -r
         OUT="$(awk -v p=0 '/^----/{p++;next}p==2{exit}p' luacov.report.out | sort -hrk4)"
         printf 'report<<END-OF-MINEUNIT-CONTENT\n%s\nEND-OF-MINEUNIT-CONTENT' "${OUT}" >> $GITHUB_OUTPUT
     - id: mineunit-coverage
