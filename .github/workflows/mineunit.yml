@@ -1,14 +1,42 @@
-name: luacheck
+name: mineunit
 on: [push, pull_request]
 
 jobs:
   mineunit:
     runs-on: ubuntu-latest
     container:
-      image: docker://ssxx/mineunit:latest
+      image: docker://mineunit/mineunit:latest
       options: -u root
     steps:
     - uses: actions/checkout@v2
-    - run: mineunit -c
-    - run: mineunit -r
-    - run: echo "::set-output name=total::$(tail -n 2 luacov.report.out | grep ^Total | grep -o '[0-9.]\+%$')"
+    - run: apk add --no-cache bash
+    - id: mineunit-tests
+      name: mineunit runner
+      working-directory: "${{ inputs.working-directory }}"
+      shell: bash
+      run: |
+        set +eo pipefail
+        exec 3>&1
+        OUT="$(mineunit -c | tee >(cat - >&3); exit ${PIPESTATUS[0]})"
+        ERR=$?
+        exec 3>&-
+        grep_eronly=(grep '0 successes / 0 failures / [1-9] error.\? / 0 pending')
+        grep_nospec=(grep 'No test files found')
+        ("${grep_eronly[@]}"<<<"$OUT" && "${grep_nospec[@]}"<<<"$OUT")&>/dev/null && echo "spec-missing=true" >> $GITHUB_OUTPUT
+        OUT="$(sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g'<<<"$OUT")"
+        printf 'stdout<<END-OF-MINEUNIT-CONTENT\n%s\nEND-OF-MINEUNIT-CONTENT' "${OUT}" >> $GITHUB_OUTPUT
+        exit $ERR
+    - id: mineunit-report
+      name: mineunit coverage report
+      shell: bash
+      run: |
+        mineunit -r
+        OUT="$(awk -v p=0 '/^----/{p++;next}p==2{exit}p' luacov.report.out | sort -hrk4)"
+        printf 'report<<END-OF-MINEUNIT-CONTENT\n%s\nEND-OF-MINEUNIT-CONTENT' "${OUT}" >> $GITHUB_OUTPUT
+    - id: mineunit-coverage
+      name: collect coverage data
+      shell: bash
+      run: |
+        echo "total=$(tail -n 2 luacov.report.out | grep ^Total | grep -o '[0-9.]\+%$')" >> $GITHUB_OUTPUT
+        awk -v p=0 '/^----/{p++;next}p==2{exit}p' luacov.report.out | sort -hrk4 > luacov.report.sum
+        echo "files=$(grep -cv '\s0\.00%' luacov.report.sum)/$(wc -l<luacov.report.sum)" >> $GITHUB_OUTPUT
