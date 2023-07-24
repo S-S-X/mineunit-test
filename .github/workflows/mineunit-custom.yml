@@ -1,8 +1,8 @@
-name: mineunit
+name: mineunit-custom
 on: [push, pull_request]
 
 jobs:
-  mineunit:
+  mineunit-custom:
     runs-on: ubuntu-latest
     container:
       image: docker://mineunit/mineunit:latest
