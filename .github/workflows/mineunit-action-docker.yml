@@ -1,0 +1,12 @@
+name: mineunit-action-docker
+on: [push, pull_request]
+
+jobs:
+  mineunit-action-docker:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/action-docker
+      with:
+        badge-name: docker
+        badge-label: Docker
