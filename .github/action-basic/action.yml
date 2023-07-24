@@ -82,7 +82,7 @@ runs:
   using: composite
   steps:
     - run: apk add --no-cache bash
-      shell: bash
+      shell: sh
     - id: mineunit-tests
       name: mineunit runner
       working-directory: "${{ inputs.working-directory }}"
