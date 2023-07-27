@@ -7,8 +7,9 @@ RUN luarocks-5.1 install luacov
 RUN luarocks-5.1 install luassert
 RUN luarocks-5.1 install busted 2.0.0-1
 
-COPY . /build/mineunit
-RUN cd /build/mineunit && luarocks-5.1 make
+#COPY . /build/mineunit
+#RUN cd /build/mineunit && luarocks-5.1 make
+RUN luarocks-5.1 install --server=https://luarocks.org/dev mineunit
 
 RUN mineunit --fetch-core 5.4.1
 RUN mineunit --fetch-core 5.5.1
