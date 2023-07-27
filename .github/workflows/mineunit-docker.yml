@@ -24,7 +24,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - uses: KeisukeYamashita/create-comment@v1
-      if: success()
+      if: success() && github.event_name == 'pull_request'
       with:
         check-only-first-line: true
         comment: |
@@ -44,7 +44,7 @@ jobs:
           </details>
 
     - uses: KeisukeYamashita/create-comment@v1
-      if: failure()
+      if: failure() && github.event_name == 'pull_request'
       with:
         check-only-first-line: true
         comment: |
