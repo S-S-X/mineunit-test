@@ -1,0 +1,13 @@
+name: mineunit-docker
+on: [push, pull_request]
+
+jobs:
+  mineunit-docker:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - id: mineunit
+      uses: S-S-X/mineunit-docker@master
+      with:
+        badge-name: docker
+        badge-label: Docker

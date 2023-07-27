@@ -8,5 +8,5 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/action-docker
       with:
-        badge-name: docker
-        badge-label: Docker
+        badge-name: docker-local
+        badge-label: Docker local
