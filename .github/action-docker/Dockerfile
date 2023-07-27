@@ -25,7 +25,7 @@ RUN chown mineunit /usr/local/share/lua/5.1/mineunit/core
 RUN apk add --no-cache lua5.1 bash
 
 COPY entrypoint.sh /entrypoint.sh
-
+RUN chmod +x /entrypoint.sh
 #USER mineunit
 #WORKDIR /home/mineunit
 
