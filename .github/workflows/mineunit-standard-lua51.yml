@@ -7,8 +7,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - id: mineunit
-      uses: mt-mods/mineunit-actions@master
+      uses: mt-mods/mineunit-actions@lua-version
       with:
+        lua-version: lua51
         badge-name: standard-lua51
         badge-label: Standard Lua 5.1
 
