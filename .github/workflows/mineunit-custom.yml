@@ -8,7 +8,7 @@ jobs:
       image: docker://mineunit/mineunit:latest
       options: -u root
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: apk add --no-cache bash
     - id: mineunit-tests
       name: mineunit runner

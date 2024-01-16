@@ -5,7 +5,7 @@ jobs:
   mineunit:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - id: mineunit
       uses: mt-mods/mineunit-actions@master
       with:

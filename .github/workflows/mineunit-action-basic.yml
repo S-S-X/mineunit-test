@@ -8,7 +8,7 @@ jobs:
       image: docker://mineunit/mineunit:latest
       options: -u root
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/action-basic
       with:
         badge-name: basic
