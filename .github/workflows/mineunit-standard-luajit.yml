@@ -1,4 +1,4 @@
-name: mineunit
+name: mineunit-luajit
 on: [push, pull_request]
 
 jobs:

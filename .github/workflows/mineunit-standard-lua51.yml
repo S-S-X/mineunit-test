@@ -1,4 +1,4 @@
-name: mineunit
+name: mineunit-lua51
 on: [push, pull_request]
 
 jobs:
