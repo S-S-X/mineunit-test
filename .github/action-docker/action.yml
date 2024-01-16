@@ -28,6 +28,10 @@ inputs:
   mineunit-version:
     description: "Mineunit version"
     required: false
+  dockerfile:
+    description: "Dockerfile"
+    required: true
+    default: "Dockerfile"
 
 outputs:
   # Generated or supplied badge properties
@@ -80,4 +84,4 @@ outputs:
 
 runs:
   using: docker
-  image: Dockerfile
+  image: ${{ inputs.dockerfile }}
